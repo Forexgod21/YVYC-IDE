@@ -4,7 +4,8 @@ Numbered register of every deviation from upstream. Governed by Fork Doctrine §
 Ceiling: **eight active L4 patches** (Doctrine §1.5).
 
 **Active L4 patches: 0 / 8**
-**Proposed entries: 7 — awaiting operator ruling. No code applied for any entry below.**
+**Ruled 2026-08-11 (operator: "OK, get busy on the repo"): PATCH-0001..0006 active, implemented in `yvyc/build/` (exclusions.json, apply-exclusions.cjs, verify-build.cjs). PATCH-0007 remains a candidate — no code authorized.**
+**All active entries are `active — unverified` until their re-verification steps run against a packaged macOS arm64 build (§6.4: unverified blocks release).**
 
 Baseline note: the 2026-08-11 clean compile was performed on a Linux x64 Codespace
 container. It verifies toolchain/source coherence only. GATE-01 (clean build on
@@ -14,7 +15,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0001 — Exclude bundled Copilot Chat extension
 - Layer:              L3
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Introduced:         (not yet applied)
 - Upstream anchor:    1.132.0
 - Files touched:      build packaging configuration (exclusion applied at package time via `yvyc/build/`; `extensions/copilot/` source tree NOT deleted). Upstream `package.json` `compile-copilot` script bypassed in YVYC build path, not edited.
@@ -28,7 +29,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0002 — Exclude bundled Microsoft account authentication
 - Layer:              L3
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
 - Files touched:      build packaging configuration (`extensions/microsoft-authentication/` not deleted)
 - Patch file:         n/a — build-time exclusion
@@ -41,7 +42,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0003 — Exclude bundled GitHub integration extension
 - Layer:              L3
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
 - Files touched:      build packaging configuration (`extensions/github/` not deleted)
 - Patch file:         n/a — build-time exclusion
@@ -54,7 +55,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0004 — Exclude bundled GitHub authentication provider
 - Layer:              L3
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
 - Files touched:      build packaging configuration (`extensions/github-authentication/` not deleted)
 - Patch file:         n/a — build-time exclusion
@@ -67,7 +68,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0005 — Telemetry strip (§3.4: stripped, not disabled)
 - Layer:              L3 (build-time product identity merge; escalates to L4 only if the GATE-04 scan proves residual endpoints, via a new ledger entry)
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
 - Files touched:      product.json at build time only (via `yvyc/build/apply-identity.cjs`, which already removes `aiConfig`, `telemetryConnectionString`, `agentsTelemetryAppName`; upstream file never hand-edited). GATE-04 scan script to be added at `yvyc/build/` — the scan is the guarantee.
 - Patch file:         n/a unless scan findings force an L4 entry
@@ -80,7 +81,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 
 ### PATCH-0006 — Microsoft internal dev tooling verified out of shipped builds
 - Layer:              L3 (verification-only entry)
-- Status:             proposed — awaiting ruling
+- Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
 - Files touched:      none — `.vscode/extensions/` (vscode-pr-pinger, selfhost test tools) and `test/` are development-workspace tooling upstream's packaging already omits; this entry pins that assumption to a gate check instead of trusting it.
 - Patch file:         n/a

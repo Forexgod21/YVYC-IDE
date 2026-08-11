@@ -1,0 +1,28 @@
+{
+	"comment": "Ruled exclusions — governed by PATCH-0001..0004 in DOCTRINE/PATCH-LEDGER.md. git and git-base are deliberately NOT here and must never be.",
+	"excludedBuiltInExtensions": [
+		"copilot",
+		"microsoft-authentication",
+		"github",
+		"github-authentication"
+	],
+	"devToolingMustBeAbsent": [
+		"vscode-pr-pinger",
+		"vscode-selfhost-test-provider",
+		"vscode-selfhost-import-aid",
+		"vscode-extras"
+	],
+	"strippedProductFields": [
+		"aiConfig",
+		"telemetryConnectionString",
+		"agentsTelemetryAppName",
+		"defaultChatAgent",
+		"voiceWsUrl"
+	],
+	"telemetryHostBlocklist": [
+		"data.microsoft.com",
+		"dc.services.visualstudio.com",
+		"vortex.data.microsoft",
+		"telemetry.microsoft.com"
+	]
+}
