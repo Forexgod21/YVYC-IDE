@@ -17,7 +17,8 @@
 		"telemetryConnectionString",
 		"agentsTelemetryAppName",
 		"defaultChatAgent",
-		"voiceWsUrl"
+		"voiceWsUrl",
+		"trustedExtensionAuthAccess"
 	],
 	"telemetryHostBlocklist": [
 		"data.microsoft.com",

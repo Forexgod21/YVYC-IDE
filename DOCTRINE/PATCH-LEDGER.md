@@ -3,8 +3,8 @@
 Numbered register of every deviation from upstream. Governed by Fork Doctrine §2.
 Ceiling: **eight active L4 patches** (Doctrine §1.5).
 
-**Active L4 patches: 0 / 8**
-**Ruled 2026-08-11 (operator: "OK, get busy on the repo"): PATCH-0001..0006 active, implemented in `yvyc/build/` (exclusions.json, apply-exclusions.cjs, verify-build.cjs). PATCH-0007 remains a candidate — no code authorized.**
+**Active L4 patches: 1 / 8** (PATCH-0008)
+**Ruled 2026-08-11 (operator: "OK, get busy on the repo"): PATCH-0001..0006 active. Operator ruling 2026-08-11 ("just clean the repo"): method changed exclude -> DELETE for 0001..0004 — directories removed from the tree (exclusions.json, apply-exclusions.cjs, verify-build.cjs). PATCH-0007 remains a candidate — no code authorized.**
 **All active entries are `active — unverified` until their re-verification steps run against a packaged macOS arm64 build (§6.4: unverified blocks release).**
 
 Baseline note: the 2026-08-11 clean compile was performed on a Linux x64 Codespace
@@ -18,7 +18,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 - Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Introduced:         (not yet applied)
 - Upstream anchor:    1.132.0
-- Files touched:      build packaging configuration (exclusion applied at package time via `yvyc/build/`; `extensions/copilot/` source tree NOT deleted). Upstream `package.json` `compile-copilot` script bypassed in YVYC build path, not edited.
+- Files touched:      `extensions/copilot/` DELETED from tree (operator ruling: delete method). Build-system detachment ledgered as PATCH-0008. verify-build.cjs still asserts absence in packaged output.
 - Patch file:         n/a — build-time exclusion, no upstream file modified
 - Capability:         The shipped editor contains no Copilot Chat: no chat sign-in prompts, no AI panel wired to Microsoft/GitHub services.
 - Higher-layer attempt: n/a — exclusion of a bundled extension is natively L3; no higher layer exists for not-shipping a component.
@@ -31,7 +31,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 - Layer:              L3
 - Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
-- Files touched:      build packaging configuration (`extensions/microsoft-authentication/` not deleted)
+- Files touched:      `extensions/microsoft-authentication/` DELETED from tree (operator ruling: delete method). Build-system detachment ledgered as PATCH-0008. verify-build.cjs still asserts absence in packaged output.
 - Patch file:         n/a — build-time exclusion
 - Capability:         The shipped editor offers no Microsoft account sign-in anywhere.
 - Higher-layer attempt: n/a — natively L3.
@@ -44,7 +44,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 - Layer:              L3
 - Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
-- Files touched:      build packaging configuration (`extensions/github/` not deleted)
+- Files touched:      `extensions/github/` DELETED from tree (operator ruling: delete method). Build-system detachment ledgered as PATCH-0008. verify-build.cjs still asserts absence in packaged output.
 - Patch file:         n/a — build-time exclusion
 - Capability:         No GitHub-specific publish/PR/issue features in the shipped editor.
 - Higher-layer attempt: n/a — natively L3.
@@ -57,7 +57,7 @@ macOS arm64, §8.2) is **not yet satisfied**.
 - Layer:              L3
 - Status:             active — unverified (implemented; awaiting packaged-build re-verification)
 - Upstream anchor:    1.132.0
-- Files touched:      build packaging configuration (`extensions/github-authentication/` not deleted)
+- Files touched:      `extensions/github-authentication/` DELETED from tree (operator ruling: delete method). Build-system detachment ledgered as PATCH-0008. verify-build.cjs still asserts absence in packaged output.
 - Patch file:         n/a — build-time exclusion
 - Capability:         The shipped editor never initiates a GitHub OAuth flow.
 - Higher-layer attempt: n/a — natively L3.
@@ -105,6 +105,20 @@ macOS arm64, §8.2) is **not yet satisfied**.
 - Re-verification:    1) Identity-applied build, fresh profile. 2) Scripted first-run: no chat view in any panel/sidebar, no AI command in command palette top results, no voice affordance. 3) Record surviving surfaces in this entry before any layer-descent discussion.
 - Last verified:      never
 
+
+### PATCH-0008 — Build-system detachment for deleted Microsoft service extensions
+- Layer:              L4 (modifies `build/` and root `package.json`)
+- Status:             active — unverified (compile re-run pending in working environment)
+- Upstream anchor:    1.132.0
+- Files touched:      `package.json` (six copilot scripts removed; compile/build-fast/watch pipelines rewired; DEPENDENCIES untouched — `@github/copilot*`, `@vscode/copilot-api` remain because `src/vs/platform/agentHost/` imports them: PATCH-0007 territory), `build/npm/dirs.ts` (4 entries), `build/gulpfile.extensions.ts` (3 compilation entries)
+- Patch file:         carried as direct tree divergence with the deletions (delete method makes reapplication-by-patch-file moot for these files; conflicts surface in-place at merge time)
+- Capability:         The repo builds cleanly with the four Microsoft service extensions deleted.
+- Higher-layer attempt: none possible — the deleted directories are hardwired into upstream build scripts; detachment requires editing them (§1.4 gap: no configuration point exists for it).
+- Blast radius:       Every future upstream merge conflicts on these files wherever Microsoft touches copilot/github wiring — this is the accepted permanent cost of the delete ruling. Packaging gulpfiles (`build/gulpfile.vscode.ts`, `build/gulpfile.reh.ts`, `build/lib/copilot.ts`) STILL contain copilot packaging logic — flagged for surgery at first packaging milestone.
+- Upstream fragility: High — upstream actively expands copilot build wiring every release.
+- Re-verification:    1) `npm install` completes with no missing-directory errors. 2) `npm run compile` finishes with 0 errors. 3) `git grep -l "extensions/copilot" -- package.json build/npm/dirs.ts build/gulpfile.extensions.ts` returns nothing.
+- Last verified:      never
+
 ---
 
-*Entries above are drafts for ruling. Per §2.3 rule 1 no code lands without a governing entry; per operator instruction 2026-08-11, no entry activates without the operator's own written ruling.*
+*PATCH-0007 remains a candidate. Per operator instruction 2026-08-11, no entry activates without the operator's own written ruling.*

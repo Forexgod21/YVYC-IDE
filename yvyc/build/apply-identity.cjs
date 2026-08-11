@@ -32,7 +32,8 @@ const STRIP = [
 	'agentsTelemetryAppName',
 	'voiceWsUrl',
 	'aiConfig',
-	'telemetryConnectionString'
+	'telemetryConnectionString',
+	'trustedExtensionAuthAccess'
 ];
 
 for (const key of STRIP) {
